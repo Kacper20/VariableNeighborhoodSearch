@@ -42,12 +42,12 @@ selection<-function(history, model)
 
 #update of a model based on a LIST of points
 #to be defined
-modelUpdate<-function(selectedPoints, oldModel, evalFunc, low, high)
+modelUpdate<-function(selectedPoints, oldModel, evalFunc, low, high, numberOfLocalSearches)
 {
   #take a look at the list of selectedPoints and
   #on the current state of the model, update it
   #and then return
-  model <- alheLocalsearch::hillclimbing(selectedPoints, low, high, evalFunc, 100)
+  model <- alheLocalsearch::hillclimbing(selectedPoints, low, high, evalFunc, length(low) * numberOfLocalSearches )
   newPoint <- model[[1]]
   evaluatedPoints <- evaluateList(list(newPoint), evalFunc)
   singlePoint <- evaluatedPoints[[1]]
@@ -89,12 +89,12 @@ variation<-function(selectedPoints, model, generationFunction)
 #An aggregated operator takes the list of historical points anf the model
 #and generates the list of new points
 #A "side effect" is the model update
-aggregatedOperator<-function(history, oldModel, eval, low, high)
+aggregatedOperator<-function(history, oldModel, eval, low, high, numberOfLocalSearches)
 {
   selectedPoints<-selection(history, oldModel)
   #newModel<-modelUpdate(selectedPoints, oldModel)
   newPoints<-variation(selectedPoints, oldModel, normalDistribution(low, high))
-  newModel<-modelUpdate(newPoints, oldModel, eval, low, high)
+  newModel<-modelUpdate(newPoints, oldModel, eval, low, high, numberOfLocalSearches)
   return (list(newPoints=newPoints,newModel=newModel))
 }
 
@@ -103,7 +103,7 @@ aggregatedOperator<-function(history, oldModel, eval, low, high)
 #a termination condition, an initialization procedure
 #and an evaluation procedure.
 #The result is the history of the run
-metaheuristicRun<-function(initialization, startPoints, termination, eval, low, high)
+metaheuristicRun<-function(initialization, startPoints, termination, eval, low, high, numberOfLocalSearches)
 {
 
   history<-initialization(startPoints)
@@ -111,7 +111,7 @@ metaheuristicRun<-function(initialization, startPoints, termination, eval, low, 
   model<-initModel(history)
   while (!termination(history,model))
   {
-    aa<-aggregatedOperator(history, model, eval, low, high)
+    aa<-aggregatedOperator(history, model, eval, low, high, numberOfLocalSearches)
     #aa$newPoints<-evaluateList(aa$newPoints, eval)
     history<-historyPush(history,aa$newPoints)
     model<-aa$newModel
@@ -161,7 +161,7 @@ evaluateList<-function(points, evaluation)
   return (points)
 }
 
-vnsSearch <- function(points , low, high, goalFunction, maxIter, kMax) {
+vnsSearch <- function(points , low, high, goalFunction, maxIter, kMax, numberOfLocalSearches) {
 
   initialization <- function (startPoints) {
     return (startPoints)
@@ -171,7 +171,7 @@ vnsSearch <- function(points , low, high, goalFunction, maxIter, kMax) {
   {
     return (model[2] > maxIter || model[3] > kMax)
   }
-  result <- metaheuristicRun(initialization, points, termination, goalFunction, low, high)
+  result <- metaheuristicRun(initialization, points, termination, goalFunction, low, high, numberOfLocalSearches)
   return (result)
 
 }

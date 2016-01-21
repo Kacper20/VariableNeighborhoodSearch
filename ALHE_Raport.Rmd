@@ -1,0 +1,45 @@
+---
+title: "ALHE_Raport"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, cache=TRUE, message=FALSE)
+library('cec2013')
+library('ggplot2')
+library('knitr')
+read_chunk('/Users/kacper/Developer/ALHE/Client.R')
+```
+
+```{r setup1}
+
+```
+###ALHE - VNS Search
+
+####Autorzy
+Paweł Andruszkiewicz 
+Kacper Harasim
+
+
+
+###Funkcja kwadratowa
+Kolejna sekcja dotyczy 
+
+####2 wymiary
+```{r test}
+```
+###CEC 2013
+
+####Problem 8
+
+
+
+#####2 wymiary
+
+
+#####5 wymiarów
+
+#####6 wymiarów
+####Problem  
+
+
+

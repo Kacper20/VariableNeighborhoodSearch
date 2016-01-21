@@ -1,12 +1,11 @@
 
-
-#res <-alheLocalsearch::hillclimbing(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec, maxIter=600)
-
+## @knitr setup1
+low <- -100
+high <- 100
 pointFromVector<-function(vec) {
   embedded <- list(coordinates=vec)
   return (list(embedded))
 }
-
 
 eval <- function(coordinates) {
   return (coordinates * (coordinates - 2) * (coordinates + 2) * (coordinates - 5) )
@@ -25,20 +24,32 @@ evalcec <- function(problemNumber) {
 }
 
 
+vectorOfRandomNumbers <- function(dimension) {
+  randomVector <- sample(0:100, dimension, replace=T)
+  return (randomVector)
+}
 
-newList<-pointFromVector(c(30, -10))
-res <- alhe::vnsSearch(newList,vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(8), 20000, 300)
+resultList <- function(res) {
+  model <- res[[1]]
+  return (list(history=res[[2]], points=model[[4]]))
+}
+
+vectorsFunc <- function(points) {
+  xPoints <- unlist(lapply(points, function(point){ point$coordinates[1] }))
+  yPoints <- unlist(lapply(points, function(point){ point$coordinates[2] }))
+  return (c(xPoints, yPoints))
+}
+
+## @knitr test
+
+newList<-pointFromVector(vectorOfRandomNumbers(2))
+res <- alhe::vnsSearch(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(8), 20000, 300, 50)
+points <- vectorsFunc(resultList(res)$points)
+qplot(points[1], points[2])
 
 
 
-model <- res[[1]]
-history <- res[[2]]
-points <- model[[4]]
-xPoints <- lapply(points, function(point){ point$coordinates[1] })
-yPoints <- lapply(points, function(point){ point$coordinates[2] })
-x <- unlist(xPoints)
-y <- unlist(yPoints)
-historyX <- unlist(lapply(history, function(point){point$coordinates[1]}))
-historyY <- unlist(lapply(history, function(point){point$coordinates[2]}))
 
-qplot(historyX, historyY)
+
+
+
