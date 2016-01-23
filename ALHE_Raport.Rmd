@@ -12,6 +12,7 @@ read_chunk('/Users/kacper/Developer/ALHE/Client.R')
 
 ```{r setup1}
 
+
 ```
 ###ALHE - VNS Search
 
@@ -22,14 +23,41 @@ Kacper Harasim
 
 
 ###Funkcja kwadratowa
-Kolejna sekcja dotyczy 
+Do testów wykorzystaliśmy funkcję 1 z pakietu CEC. 
+Jest to funkcja wyrażona wzorem:
+<img src="/Users/kacper/Developer/ALHE/CEC1_F_D.png"/>
+
+Wykres w przestrzeni 2D wygląda następująco:
+
+<img src="/Users/kacper/Developer/ALHE/CEC1_F_I.png"/>
+
+Wykresy przedstawiają 
+
+``` {r cec1_2_plot}
+
+```
+
+
+Wykonaliśmy 15 pomiarów dla funkcji...
+
+```{r cec1_2_table}
+
+```
+
+
+
 
 ####2 wymiary
-```{r test}
-```
+
+
+
+
+
 ###CEC 2013
 
 ####Problem 8
+
+
 
 
 
@@ -38,8 +66,42 @@ Kolejna sekcja dotyczy
 
 #####5 wymiarów
 
-#####6 wymiarów
-####Problem  
+#####20 wymiarów
+
+
+
+
+
+
+
+
+
+
+
+
+####Problem 14
+
+#####2 wymiary
+
+
+#####5 wymiarów
+
+#####20 wymiarów
+
+####Problem 8
+
+
+
+
+
+#####2 wymiary
+
+
+#####5 wymiarów
+
+#####20 wymiarów
+
+
 
 
 

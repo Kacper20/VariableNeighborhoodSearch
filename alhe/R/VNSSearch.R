@@ -54,15 +54,17 @@ modelUpdate<-function(selectedPoints, oldModel, evalFunc, low, high, numberOfLoc
 
   modelPoint <- oldModel[[1]]
   iterations <- oldModel[[2]] + 1
-  cat("k : ", oldModel[[3]])
-  cat(" Current Iter: ", oldModel[[2]], "\n")
+  message("k : ", oldModel[[3]])
+  message(" Current Iter: ", oldModel[[2]], "\n")
   if (singlePoint$quality < modelPoint$quality) {
 
-    cat("Actual best: ", singlePoint$coordinates, "\n")
-    cat("Quality: ", singlePoint$quality, "\n")
+    message("Actual best: ", singlePoint$coordinates, "\n")
+    message("Quality: ", singlePoint$quality, "\n")
     old <- oldModel[[4]]
     old[[length(old)+1]] <- singlePoint
     return (list(singlePoint, iterations, 1,old))
+
+
   }
   else {
     return (list(modelPoint, iterations, oldModel[[3]] + 1, oldModel[[4]]))
