@@ -255,6 +255,12 @@ Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum
 
 Średni błąd wynosi dość dużo, jednakże wynika to z jednego nieudanego przejścia algorytmu. W pozostałych przypadkach radzi sobie on całkiem dobrze dla 5 wymiarów, osiągając relatywnie mały błąd względny.
 
+Zwiekszyliśmy współczynnik density do 1. Oto rezultaty:
+```{r cec14_2_table5_high_dens}
+
+```
+
+
 #####20 wymiarów
 ```{r cec14_2_table20}
 
