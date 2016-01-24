@@ -25,11 +25,11 @@ Kacper Harasim
 ###Funkcja kwadratowa
 Do testów wykorzystaliśmy funkcję 1 z pakietu CEC. 
 Jest to funkcja wyrażona wzorem:
-<img src="/Users/kacper/Developer/ALHE/CEC1_F_D.png"/>
+<img src="https://www.dropbox.com/s/141pu1rozx3xwmu/CEC1_F_D.png?dl=1"/>
 
 Wykres w przestrzeni 2D wygląda następująco:
 
-<img src="/Users/kacper/Developer/ALHE/CEC1_F_I.png"/>
+<img src="https://www.dropbox.com/s/hl2qzv641c0t1tc/CEC1_F_I.png?dl=1"/>
 
 Algorytm dla problemu funkcji kwadratowej ustawiony został z następującymi nastawami:
 * kMax = 50
@@ -98,9 +98,23 @@ Dla funkcji kwadratowej algorytm sprawdza się bardzo dobrze. Dla 20 wymiarów m
 
 
 
-###CEC 2013
 
-####Problem 8
+
+###Rotated Ackley's Function - CEC8
+
+<img src="https://www.dropbox.com/s/eq8o9ggmae6dd9i/CEC8_F_D.png?dl=1"/>
+
+Do drugiego testu wybraliśmy benchmark 8 z pakietu CEC.
+Funkcja jest asymetryczna, oraz multimodalna. Ma ona wiele optimów lokalnych, więc uznaliśmy że nada się do przetestowania naszego algorytmu. Zwracamy uwagę przede wszystkim na umiejętność jej wychodzenia z tych optimów i dążenie do optimum globalnego.
+
+Wykres 3-D funkcji:
+
+<img src="https://www.dropbox.com/s/gcn579h45d9lylu/CEC8_F_I.png?dl=1"/>
+
+
+Mapa konturowa funkcji:
+
+<img src="https://www.dropbox.com/s/5h14wy0fs0ovg4u/CEC8_F_C.png?dl=0"/>
 
 
 
@@ -124,7 +138,24 @@ Dla funkcji kwadratowej algorytm sprawdza się bardzo dobrze. Dla 20 wymiarów m
 
 
 
-####Problem 14
+####Problem Schwefel's Function 
+
+<img src="https://www.dropbox.com/s/1xh9wevfqmhtzb2/CEC14_F_D.png?dl=1"/>
+
+Funkcja ta jest multi-modalna, a jej liczba optimów lokalnych jest ogromna. Drugi najlepszy punkt jest znacząco oddalony od globalnego optimum, co sprawia że funkcja jest szczególnie interesująca do badania w kontekście znalezienia najlepszego punktu.
+
+
+Wykres 3-D funkcji:
+
+<img src="https://www.dropbox.com/s/yh57m2kclxjzg32/CEC14_F_I.png?dl=1"/>
+
+
+Mapa konturowa funkcji:
+
+<img src="https://www.dropbox.com/s/md9u20ciyaj4vuw/CEC14_F_C.png?dl=1"/>
+
+
+
 
 #####2 wymiary
 
