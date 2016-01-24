@@ -4,10 +4,10 @@
 ####HELPER FUNCTIONS
 
 #Functions of probabilistic sirtsibution. Gets low and high boundaries, and returns another specialized function
-normalDistribution <- function(low, high)
+normalDistribution <- function(low, high, density)
 {
   function(position, k) {
-    value <- 0.25 * k
+    value <- density * k
     val <-  hchange(position, low, high, rnorm, mean=0, sd=value, round=FALSE)
     return (val)
   }
@@ -56,18 +56,25 @@ modelUpdate<-function(selectedPoints, oldModel, evalFunc, low, high, numberOfLoc
   iterations <- oldModel[[2]] + 1
   message("k : ", oldModel[[3]])
   message(" Current Iter: ", oldModel[[2]], "\n")
+  qualityHist <- oldModel[[5]]
+  qualityHistPoints <- qualityHist[[1]]
+
+  qualityHistPoints[[length(qualityHistPoints)+1]] <- qualityHistPoints[[length(qualityHistPoints)]]
+
+  qualityHistIter <- qualityHist[[2]]
+  qualityHistIter[length(qualityHistIter)+1] <- iterations
   if (singlePoint$quality < modelPoint$quality) {
 
     message("Actual best: ", singlePoint$coordinates, "\n")
     message("Quality: ", singlePoint$quality, "\n")
+    qualityHistPoints[[length(qualityHistPoints)]] <- singlePoint
     old <- oldModel[[4]]
     old[[length(old)+1]] <- singlePoint
-    return (list(singlePoint, iterations, 1,old))
-
+    return (list(singlePoint, iterations, 1,old, list(qualityHistPoints, qualityHistIter)))
 
   }
   else {
-    return (list(modelPoint, iterations, oldModel[[3]] + 1, oldModel[[4]]))
+    return (list(modelPoint, iterations, oldModel[[3]] + 1, oldModel[[4]], list(qualityHistPoints,qualityHistIter)))
   }
 }
 
@@ -91,11 +98,11 @@ variation<-function(selectedPoints, model, generationFunction)
 #An aggregated operator takes the list of historical points anf the model
 #and generates the list of new points
 #A "side effect" is the model update
-aggregatedOperator<-function(history, oldModel, eval, low, high, numberOfLocalSearches)
+aggregatedOperator<-function(history, oldModel, eval, low, high, numberOfLocalSearches, density)
 {
   selectedPoints<-selection(history, oldModel)
   #newModel<-modelUpdate(selectedPoints, oldModel)
-  newPoints<-variation(selectedPoints, oldModel, normalDistribution(low, high))
+  newPoints<-variation(selectedPoints, oldModel, normalDistribution(low, high, density))
   newModel<-modelUpdate(newPoints, oldModel, eval, low, high, numberOfLocalSearches)
   return (list(newPoints=newPoints,newModel=newModel))
 }
@@ -105,7 +112,7 @@ aggregatedOperator<-function(history, oldModel, eval, low, high, numberOfLocalSe
 #a termination condition, an initialization procedure
 #and an evaluation procedure.
 #The result is the history of the run
-metaheuristicRun<-function(initialization, startPoints, termination, eval, low, high, numberOfLocalSearches)
+metaheuristicRun<-function(initialization, startPoints, termination, eval, low, high, numberOfLocalSearches, density)
 {
 
   history<-initialization(startPoints)
@@ -113,7 +120,7 @@ metaheuristicRun<-function(initialization, startPoints, termination, eval, low, 
   model<-initModel(history)
   while (!termination(history,model))
   {
-    aa<-aggregatedOperator(history, model, eval, low, high, numberOfLocalSearches)
+    aa<-aggregatedOperator(history, model, eval, low, high, numberOfLocalSearches, density)
     #aa$newPoints<-evaluateList(aa$newPoints, eval)
     history<-historyPush(history,aa$newPoints)
     model<-aa$newModel
@@ -138,7 +145,8 @@ metaheuristicRun<-function(initialization, startPoints, termination, eval, low, 
 #initializes model - DONE.
 initModel<-function(history)
 {
-  return (list(points=history[[1]], iterations=0, k=1, bestHistory=history[1]))
+
+  return (list(points=history[[1]], iterations=0, k=1, bestHistory=history[1], qualityHistory=list(history[1], 0)))
 }
 
 #push a LIST of points into the history
@@ -163,7 +171,7 @@ evaluateList<-function(points, evaluation)
   return (points)
 }
 
-vnsSearch <- function(points , low, high, goalFunction, maxIter, kMax, numberOfLocalSearches) {
+vnsSearch <- function(points , low, high, goalFunction, maxIter, kMax, numberOfLocalSearches, density) {
 
   initialization <- function (startPoints) {
     return (startPoints)
@@ -173,7 +181,7 @@ vnsSearch <- function(points , low, high, goalFunction, maxIter, kMax, numberOfL
   {
     return (model[2] > maxIter || model[3] > kMax)
   }
-  result <- metaheuristicRun(initialization, points, termination, goalFunction, low, high, numberOfLocalSearches)
+  result <- metaheuristicRun(initialization, points, termination, goalFunction, low, high, numberOfLocalSearches, density)
   return (result)
 
 }

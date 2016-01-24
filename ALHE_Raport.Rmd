@@ -31,25 +31,70 @@ Wykres w przestrzeni 2D wygląda następująco:
 
 <img src="/Users/kacper/Developer/ALHE/CEC1_F_I.png"/>
 
-Wykresy przedstawiają 
+Algorytm dla problemu funkcji kwadratowej ustawiony został z następującymi nastawami:
+* kMax = 50
+* iterMax = 500 * liczba wymiarów
+* wyszukiwania lokalne = 50
+* gęstość przeszukiwania (zmiana odchylenia standardowego w zależności od k)
 
-``` {r cec1_2_plot}
+Dla funkcji zostało dobrane stosunkowo niewielkie kMax, ponieważ jest to funkcja z wyłącznie jednym minimum lokalnym.
+
+
+
+```{r cec1_2_setup}
+```
+
+Wykres przedstawiający ślad punktów z historii:
+
+``` {r cec1_2_plot1}
+
+```
+
+Wykres przedstawiający zmiany z najlepszych punktach:
+
+
+``` {r cec1_2_plot2}
+
+``` 
+
+Wykres jakości od numeru iteracji:
+``` {r cec1_2_plot3}
 
 ```
 
 
-Wykonaliśmy 15 pomiarów dla funkcji...
+Wykonaliśmy po 5 pomiarów błędów dla funkcji w każdym wymiarze.
 
-```{r cec1_2_table}
+#####2 wymiary
+```{r cec1_2_table2}
+
+```
+
+Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum globalne. 
+
+#####5 wymiarów
+
+```{r cec1_2_table5}
 
 ```
 
 
+#####20 wymiarów
+```{r cec1_2_table20}
+
+```
+
+#####20 wymiarów z modyfikacjami
+
+Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokami. Rezultat był następujący:
 
 
-####2 wymiary
+```{r cec1_2_table20_higher_density}
+```
 
+####Wnioski
 
+Dla funkcji kwadratowej algorytm sprawdza się bardzo dobrze. Dla 20 wymiarów możemy zaobserwować większe błędy. 
 
 
 

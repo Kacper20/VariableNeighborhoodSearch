@@ -31,63 +31,194 @@ vectorOfRandomNumbers <- function(dimension) {
 
 resultList <- function(res) {
   model <- res[[1]]
-  return (list(history=res[[2]], points=model[[4]], best=model[[1]]))
+  return (list(history=res[[2]], points=model[[4]], best=model[[1]], bestQuality=model[[5]]))
 }
 
-vectorsFunc <- function(points) {
+getVectors <- function(points) {
   xPoints <- unlist(lapply(points, function(point){ point$coordinates[1] }))
   yPoints <- unlist(lapply(points, function(point){ point$coordinates[2] }))
   return (list(xPoints, yPoints))
 }
 
-## @knitr cec1_2_plot
-
-newList<-pointFromVector(vectorOfRandomNumbers(2))
-res <- alhe::vnsSearch(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(1), 30 * length(newList), 100, 50)
-
-points <- vectorsFunc(resultList(res)$points)
-qplot(points[1], points[2])
-
-qplot(history[1], history[2])
-
-
-
-
-## @knitr cec1_2_table
-
-optimumValue <- -1400
-
-vectorOfResults <- numeric()
-vectorOfErrors <- numeric()
-for (i in 1:2) {
-  newList<-pointFromVector(vectorOfRandomNumbers(20))
-  res <- alhe::vnsSearch(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(1), 100 * length(newList), 100, 50)
-  best <- resultList(res)$best
-  bestQuality <- best$quality
-  vectorOfResults[i] <-bestQuality
-  vectorOfErrors[i] <- bestQuality - optimumValue
+getQualityVector <- function(points) {
+  quality <- unlist(lapply(points, function(point) {point$quality}))
+  return (quality)
 }
 
-df <- data.frame(vectorOfResults, vectorOfErrors)
-kable(df, col.names=c("Wynik", "Blad"))
-meanErr <- mean(vectorOfErrors)
-cat("Średni błąd wyniósł: ", meanErr)
+generateTable <- function(optimumValue, iterations, dimension, cecProblem, maxIterFactor, kmax, localSearches, density) {
+  vectorOfResults <- numeric()
+  vectorOfErrors <- numeric()
+  vectorOfRelativeErrors <- numeric()
+  for (i in 1:iterations) {
+    newList<-pointFromVector(vectorOfRandomNumbers(dimension))
+    res <- alhe::vnsSearch(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(cecProblem), maxIterFactor * dimension, kmax, localSearches, density)
+    b <- resultList(res)$best
+    bestQuality <- b[[2]]
+    vectorOfResults[i] <-bestQuality
+    vectorOfErrors[i] <- bestQuality - optimumValue
+    vectorOfRelativeErrors[i] <- abs((bestQuality - optimumValue)/optimumValue)
+  }
+  df <- data.frame(vectorOfResults, vectorOfErrors, vectorOfRelativeErrors)
+  meanErr <- mean(vectorOfErrors)
+  cat("Średni błąd wyniósł: ", meanErr)
+  return (df)
+}
 
 
 
 
+## @knitr cec1_2_setup
 
 
-
-
-
-
-## @knitr test
-
+numberOfIters <- 1
 newList<-pointFromVector(vectorOfRandomNumbers(2))
-res <- alhe::vnsSearch(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(8), 20000, 300, 50)
-points <- vectorsFunc(resultList(res)$points)
-qplot(points[1], points[2])
+res <- alhe::vnsSearch(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(1), 500 * length(newList[[1]]), 50, 50, 0.25)
+
+
+
+## @knitr cec1_2_plot1
+
+
+#Wykres wszystkich punktów z historii
+x <- resultList(res)$points
+pts <- getVectors(x)
+q1_21 <- qplot(pts[[1]], pts[[2]])
+q1_21 <- q1_21 + labs(title = "Changing best points chart")
+q1_21 <- q1_21 + labs(x="X axis")
+q1_21 + labs(y="Y axis")
+
+
+
+
+## @knitr cec1_2_plot2
+
+history <- resultList(res)$history
+historyPts <- getVectors(history)
+q1_22 <- qplot(historyPts[[1]], historyPts[[2]])
+q1_22 <- q1_22 + labs(title = "History of points chart")
+q1_22 <- q1_22 + labs(x="X axis")
+q1_22 + labs(y="Y axis")
+
+
+## @knitr cec1_2_plot3
+
+testVal <-resultList(res)$bestQuality
+qualityX <- testVal[[2]]
+qualityY <- getQualityVector(testVal[[1]])
+q1_23 <- qplot(qualityX, qualityY)
+q1_23 <- q1_23 + labs(title = "Change of quality over iterations")
+q1_23 <- q1_23 + labs(x="Iteration number")
+q1_23 + labs(y="Quality value")
+
+
+
+
+## @knitr cec1_2_table2
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 2, cecProblem = 1, maxIterFactor = 500, kmax = 50, localSearches = 50 , density=0.25)
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+
+## @knitr cec1_2_table5
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 5, cecProblem = 1, maxIterFactor = 500, kmax = 50, localSearches = 50, density=0.25 )
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+## @knitr cec1_2_table20
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 20, cecProblem = 1, maxIterFactor = 500, kmax = 50, localSearches = 50, density=0.25 )
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+## @knitr cec1_2_table20_higher_density
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 20, cecProblem = 1, maxIterFactor = 500, kmax = 200, localSearches = 50, density=0.05 )
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+
+
+
+
+
+########################
+########################
+########################
+########################
+########################
+########################
+
+
+
+## @knitr cec8_2_setup
+
+
+numberOfIters <- 5
+newList<-pointFromVector(vectorOfRandomNumbers(2))
+res <- alhe::vnsSearch(newList, vectorOf(low, length(newList)), vectorOf(high, length(newList)), evalcec(8), 500 * length(newList[[1]]), 50, 50, 0.25)
+
+
+
+## @knitr cec8_2_plot1
+
+
+#Wykres wszystkich punktów z historii
+x <- resultList(res)$points
+pts <- getVectors(x)
+q1_21 <- qplot(pts[[1]], pts[[2]])
+q1_21 <- q1_21 + labs(title = "Changing best points chart")
+q1_21 <- q1_21 + labs(x="X axis")
+q1_21 + labs(y="Y axis")
+
+
+
+
+## @knitr cec8_2_plot2
+
+history <- resultList(res)$history
+historyPts <- getVectors(history)
+q1_22 <- qplot(historyPts[[1]], historyPts[[2]])
+q1_22 <- q1_22 + labs(title = "History of points chart")
+q1_22 <- q1_22 + labs(x="X axis")
+q1_22 + labs(y="Y axis")
+
+
+## @knitr cec8_2_plot3
+
+testVal <-resultList(res)$bestQuality
+qualityX <- testVal[[2]]
+qualityY <- getQualityVector(testVal[[1]])
+q1_23 <- qplot(qualityX, qualityY)
+q1_23 <- q1_23 + labs(title = "Change of quality over iterations")
+q1_23 <- q1_23 + labs(x="Iteration number")
+q1_23 + labs(y="Quality value")
+
+
+
+
+## @knitr cec8_2_table2
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 2, cecProblem = 8, maxIterFactor = 500, kmax = 50, localSearches = 50 , density=0.25)
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+
+## @knitr cec8_2_table5
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 5, cecProblem = 8, maxIterFactor = 500, kmax = 50, localSearches = 50, density=0.25 )
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+## @knitr cec8_2_table20
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 20, cecProblem = 8, maxIterFactor = 500, kmax = 50, localSearches = 50, density=0.25 )
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+## @knitr cec8_2_table20_higher_density
+
+df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 20, cecProblem = 8, maxIterFactor = 500, kmax = 200, localSearches = 50, density=0.05 )
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"))
+
+
+
+
+
 
 
 
