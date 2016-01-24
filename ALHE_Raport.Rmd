@@ -7,7 +7,7 @@ knitr::opts_chunk$set(echo=FALSE, cache=TRUE, message=FALSE)
 library('cec2013')
 library('ggplot2')
 library('knitr')
-read_chunk('/Users/kacper/Developer/ALHE/Client.R')
+read_chunk('Client.R')
 ```
 
 ```{r setup1}
@@ -31,14 +31,13 @@ Wykres w przestrzeni 2D wygląda następująco:
 
 <img src="https://www.dropbox.com/s/hl2qzv641c0t1tc/CEC1_F_I.png?dl=1"/>
 
-Algorytm dla problemu funkcji kwadratowej ustawiony został z następującymi nastawami:
+Algorytm dla problemu funkcji kwadratowej ustawiony został z następującymi parametrami:
 * kMax = 50
 * iterMax = 500 * liczba wymiarów
-* wyszukiwania lokalne = 50
-* gęstość przeszukiwania (zmiana odchylenia standardowego w zależności od k)
+* wyszukiwania lokalne = 50 * wymiarów
+* gęstość przeszukiwania (zmiana odchylenia standardowego w zależności od k) = 0.25
 
 Dla funkcji zostało dobrane stosunkowo niewielkie kMax, ponieważ jest to funkcja z wyłącznie jednym minimum lokalnym.
-
 
 
 ```{r cec1_2_setup}
@@ -58,9 +57,12 @@ Wykres przedstawiający zmiany z najlepszych punktach:
 ``` 
 
 Wykres jakości od numeru iteracji:
+
 ``` {r cec1_2_plot3}
 
 ```
+
+Na wykresie ostatnim możemy zauważyć, że minimum jest osiągane bardzo szybko. 
 
 
 Wykonaliśmy po 5 pomiarów błędów dla funkcji w każdym wymiarze.
@@ -70,7 +72,7 @@ Wykonaliśmy po 5 pomiarów błędów dla funkcji w każdym wymiarze.
 
 ```
 
-Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum globalne. 
+Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum globalne. Błąd jest minimalny.
 
 #####5 wymiarów
 
@@ -78,24 +80,36 @@ Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum
 
 ```
 
+Dla 5 wymiarów algorytm zachowuje się podobnie jak dla dwóch, wyniki są satysfakcjonujące.
+
 
 #####20 wymiarów
 ```{r cec1_2_table20}
 
 ```
 
+Dla 20 wymiarów błąd jest nieco większy, choć nadal akceptowalny.
+
+
+
 #####20 wymiarów z modyfikacjami
 
-Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokami. Rezultat był następujący:
+Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokami.
+Parametry zostały zmodyfikowane: kmax podniesione do 250, a krok pomniejszony do 0.05.
+Rezultat był następujący:
 
 
 ```{r cec1_2_table20_higher_density}
 ```
 
+Jak widzimy, zmiany nie są zbyt duże w stosunku do pierwowzoru.
+
 ####Wnioski
 
 Dla funkcji kwadratowej algorytm sprawdza się bardzo dobrze. Dla 20 wymiarów możemy zaobserwować większe błędy. 
+Prawdopodobnie, gdyby zmniejszać coraz bardziej odchylenie standardowe rozkładu normalnego, funkcja wreszcie doszłaby do swojego optimum w 20 wymiarach. Zajęłoby to jednak znacznie więcej czasu.
 
+Wynik dla funkcji kwadratowej uważamy za jak najbardziej satysfakcjonujący
 
 
 
@@ -107,6 +121,7 @@ Dla funkcji kwadratowej algorytm sprawdza się bardzo dobrze. Dla 20 wymiarów m
 Do drugiego testu wybraliśmy benchmark 8 z pakietu CEC.
 Funkcja jest asymetryczna, oraz multimodalna. Ma ona wiele optimów lokalnych, więc uznaliśmy że nada się do przetestowania naszego algorytmu. Zwracamy uwagę przede wszystkim na umiejętność jej wychodzenia z tych optimów i dążenie do optimum globalnego.
 
+
 Wykres 3-D funkcji:
 
 <img src="https://www.dropbox.com/s/gcn579h45d9lylu/CEC8_F_I.png?dl=1"/>
@@ -116,29 +131,81 @@ Mapa konturowa funkcji:
 
 <img src="https://www.dropbox.com/s/5h14wy0fs0ovg4u/CEC8_F_C.png?dl=0"/>
 
+Widzimy, że globalne optimum znacznie różni się od innych lokalnych optimów. W związku z tym celem algorytmu jest znalezienie się w otoczeniu globalnego optimum. Gdy już się tam znajdzie - powinien on jak najszybciej zacząć zbiegać ku niemu
+
+Algorytm dla problemu ustawiony został z następującymi parametrami:
+* kMax = 500 dla 2 wymiarów, 1000 dla większej liczby
+* iterMax = 1000 * liczba wymiarów
+* wyszukiwania lokalne = 50 * liczba wymiarów
+* gęstość przeszukiwania (zmiana odchylenia standardowego w zależności od k) = 0.25 dla 2 wymiarów, 0.1 dla większej liczby
+
+Dla funkcji zostało dobrane stosunkowo niewielkie kMax, ponieważ jest to funkcja z wyłącznie jednym minimum lokalnym.
+ 
 
 
+```{r cec8_2_setup}
+```
 
+Wykres przedstawiający ślad punktów z historii:
+
+``` {r cec8_2_plot1}
+
+```
+
+Wykres przedstawiający zmiany z najlepszych punktach:
+
+
+``` {r cec8_2_plot2}
+
+``` 
+
+Wykres jakości od numeru iteracji:
+
+``` {r cec8_2_plot3}
+
+```
+
+Zauważamy, że gdy algorytm znajdzie się w pewnym punkcie(otoczenie globalnego optimum), zaczyna bardzo gwałtownie zbiegać do niego co jest porządane i wynika za specyfiki badanego problemu.
+
+Wykonaliśmy po 5 pomiarów błędów dla funkcji w każdym wymiarze.
 
 #####2 wymiary
+```{r cec8_2_table2}
 
+```
+
+Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum globalne. 
 
 #####5 wymiarów
 
+
+
+```{r cec8_2_table5}
+
+```
+
+
+
 #####20 wymiarów
+```{r cec8_2_table20}
+
+```
+
+#####20 wymiarów z modyfikacjami
+
+Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokami: kMax = 1500, density = 0.05
+Rezultat był następujący:
+
+
+```{r cec8_2_table20_higher_density}
+```
+
+TODO:
 
 
 
 
-
-
-
-
-
-
-
-
-####Problem Schwefel's Function 
+###Problem Schwefel's Function 
 
 <img src="https://www.dropbox.com/s/1xh9wevfqmhtzb2/CEC14_F_D.png?dl=1"/>
 
@@ -157,25 +224,68 @@ Mapa konturowa funkcji:
 
 
 
-#####2 wymiary
 
+```{r cec14_2_setup}
+```
+
+Wykres przedstawiający ślad punktów z historii:
+
+``` {r cec14_2_plot1}
+
+```
+
+Wykres przedstawiający zmiany z najlepszych punktach:
+
+
+``` {r cec14_2_plot2}
+
+``` 
+
+Wykres jakości od numeru iteracji:
+
+``` {r cec14_2_plot3}
+
+```
+
+
+Wykonaliśmy po 5 pomiarów błędów dla funkcji w każdym wymiarze.
+
+#####2 wymiary
+```{r cec14_2_table2}
+
+```
+
+Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum globalne. 
 
 #####5 wymiarów
 
-#####20 wymiarów
+```{r cec14_2_table5}
 
-####Problem 8
+```
 
-
-
-
-
-#####2 wymiary
-
-
-#####5 wymiarów
 
 #####20 wymiarów
+```{r cec14_2_table20}
+
+```
+
+#####20 wymiarów z modyfikacjami
+
+Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokami. Rezultat był następujący:
+Dobrane zostały: kMax = 1500, density = 0.05
+
+```{r cec14_2_table20_higher_density}
+```
+
+
+
+###Wnioski z eksperymentów
+
+Wyniki uzyskane okazały się całkiem satysfakcjonujące. Uważamy, że barierą do uzyskania trochę lepszych wyników dla dużej liczby wymiarów był czas obliczeń, które były powtarzane wiele razy.
+Dla przypadkow dwuwymiarowych algorytm zachowuje się tak, jak tego oczekiwaliśmy - działa bardzo szybko, odnajduje globalne minima z łatwością, nie "utyka" w lokalnych.
+
+Uważamy, że warto byłoby poeksperymentować również z innymi rozkładami liczb losowych, ponieważ w naszych eksperymentach korzystaliśmy jedynie z rozkładu normalnego. 
+
 
 
 
