@@ -1,10 +1,10 @@
 Package: alhe
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1
-Date: 2016-01-17
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Variable Neighborhood Search Algorithm implementation.
+Version: 0.5
+Date: 2016-01-25
+Author: Pawel Andruszkiewicz, Kacper Harasim
+Maintainer: pandrus1@mion.elka.pw.edu.pl
+Description: VNS implemetation optimized for use in continous problems. ALHE 15Z Project.
+License: MIT
 LazyData: TRUE

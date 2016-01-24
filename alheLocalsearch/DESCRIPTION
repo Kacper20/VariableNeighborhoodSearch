@@ -1,10 +1,10 @@
 Package: alheLocalsearch
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1
-Date: 2016-01-16
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Hill Climbing Algorithm used as a localsearch in alhe::vnsSearch 
+Version: 0.2
+Date: 2016-01-25
+Author: Pawel Andruszkiewicz, Kacper Harasim
+Maintainer: pandrus1@mion.elka.pw.edu.pl
+Description: Hill Climbing Algorithm optimized for use in continous problems. It is stochastic version - neighboring points are selected with normal distribution. ALHE 15Z Project.
+License: MIT
 LazyData: TRUE
