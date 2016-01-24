@@ -45,15 +45,7 @@ getQualityVector <- function(points) {
   return (quality)
 }
 
-getRowLabels <- function(iterations) {
-  
-  vecOfStrings = character()
-  for (i in 1:iterations) {
-    vecOfStrings[i] = paste("Iteracja ", toString(i))
-  }
-  
-  return (vecOfStrings)
-}
+
 
 generateTable <- function(optimumValue, iterations, dimension, cecProblem, maxIterFactor, kmax, localSearches, density) {
   vectorOfResults <- numeric()
@@ -126,23 +118,23 @@ q1_23 + labs(y="Quality value")
 ## @knitr cec1_2_table2
 
 df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 2, cecProblem = 1, maxIterFactor = 500, kmax = 50, localSearches = 50 , density=0.25)
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 
 ## @knitr cec1_2_table5
 
 df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 5, cecProblem = 1, maxIterFactor = 500, kmax = 50, localSearches = 50, density=0.25 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ## @knitr cec1_2_table20
 
 df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 20, cecProblem = 1, maxIterFactor = 500, kmax = 50, localSearches = 50, density=0.25 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ## @knitr cec1_2_table20_higher_density
 
 df <- generateTable(optimumValue = -1400, iterations =  numberOfIters, dimension = 20, cecProblem = 1, maxIterFactor = 500, kmax = 250, localSearches = 50, density=0.05 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 
 
@@ -207,23 +199,23 @@ q8_23 + labs(y="Quality value")
 ## @knitr cec8_2_table2
 
 df <- generateTable(optimumValue = -700, iterations =  numberOfIters, dimension = 2, cecProblem = 8, maxIterFactor = 500, kmax = 500, localSearches = 50 , density=0.25)
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 
 ## @knitr cec8_2_table5
 
 df <- generateTable(optimumValue = -700, iterations =  numberOfIters, dimension = 5, cecProblem = 8, maxIterFactor = 500, kmax = 1000, localSearches = 50, density=0.1 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ## @knitr cec8_2_table20
 
 df <- generateTable(optimumValue = -700, iterations =  numberOfIters, dimension = 20, cecProblem = 8, maxIterFactor = 500, kmax = 1000, localSearches = 50, density=0.1 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ## @knitr cec8_2_table20_higher_density
 
 df <- generateTable(optimumValue = -700, iterations =  numberOfIters, dimension = 20, cecProblem = 8, maxIterFactor = 1500, kmax = 1500, localSearches = 50, density=0.05 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ########################
 ########################
@@ -283,23 +275,23 @@ q1_23 + labs(y="Quality value")
 ## @knitr cec14_2_table2
 
 df <- generateTable(optimumValue = -100, iterations =  numberOfIters, dimension = 2, cecProblem = 14, maxIterFactor = 1000, kmax = 500, localSearches = 50 , density=0.25)
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 
 ## @knitr cec14_2_table5
 
 df <- generateTable(optimumValue = -100, iterations =  numberOfIters, dimension = 5, cecProblem = 14, maxIterFactor = 1000, kmax = 500, localSearches = 50, density=0.25 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ## @knitr cec14_2_table20
 
 df <- generateTable(optimumValue = -100, iterations =  numberOfIters, dimension = 20, cecProblem = 14, maxIterFactor = 1000, kmax = 500, localSearches = 50, density=0.25 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ## @knitr cec14_2_table20_higher_density
 
 df <- generateTable(optimumValue = -100, iterations =  numberOfIters, dimension = 20, cecProblem = 14, maxIterFactor = 1500, kmax = 1500, localSearches = 50, density=0.05 )
-knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=getRowLabels(numberOfIters))
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 
 

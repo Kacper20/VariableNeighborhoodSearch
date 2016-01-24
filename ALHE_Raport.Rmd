@@ -21,7 +21,6 @@ Paweł Andruszkiewicz
 Kacper Harasim
 
 
-
 ###Funkcja kwadratowa
 Do testów wykorzystaliśmy funkcję 1 z pakietu CEC. 
 Jest to funkcja wyrażona wzorem:
@@ -200,7 +199,7 @@ Rezultat był następujący:
 ```{r cec8_2_table20_higher_density}
 ```
 
-TODO:
+
 
 
 
@@ -276,7 +275,6 @@ Dobrane zostały: kMax = 1500, density = 0.05
 
 ```{r cec14_2_table20_higher_density}
 ```
-
 
 
 ###Wnioski z eksperymentów
