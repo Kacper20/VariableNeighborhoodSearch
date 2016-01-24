@@ -288,7 +288,7 @@ knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRU
 
 ## @knitr cec14_2_table20
 cat("CEC14T20")
-df <- generateTable(optimumValue = -100, iterations =  numberOfIters, dimension = 20, cecProblem = 14, maxIterFactor = 1000, kmax = 500, localSearches = 50, density=0.25 )
+df <- generateTable(optimumValue = -100, iterations =  numberOfIters, dimension = 20, cecProblem = 14, maxIterFactor = 500, kmax = 500, localSearches = 50, density=0.25 )
 knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 ## @knitr cec14_2_table20_higher_density
@@ -300,6 +300,11 @@ knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRU
 
 
 
+
+## @knitr cec14_2_table5_high_dens
+cat("CEC14T5")
+df <- generateTable(optimumValue = -100, iterations =  numberOfIters, dimension = 5, cecProblem = 14, maxIterFactor = 1000, kmax = 500, localSearches = 50, density=1 )
+knitr::kable(df, col.names=c("Result", "Error", "Relative error"), row.names=TRUE)
 
 
 

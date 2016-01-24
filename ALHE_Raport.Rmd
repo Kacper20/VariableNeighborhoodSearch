@@ -12,7 +12,6 @@ read_chunk('Client.R')
 
 ```{r setup1}
 
-
 ```
 ###ALHE - VNS Search
 
@@ -97,7 +96,6 @@ Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokam
 Parametry zostały zmodyfikowane: kmax podniesione do 250, a krok pomniejszony do 0.05.
 Rezultat był następujący:
 
-
 ```{r cec1_2_table20_higher_density}
 ```
 
@@ -108,7 +106,7 @@ Jak widzimy, zmiany nie są zbyt duże w stosunku do pierwowzoru.
 Dla funkcji kwadratowej algorytm sprawdza się bardzo dobrze. Dla 20 wymiarów możemy zaobserwować większe błędy. 
 Prawdopodobnie, gdyby zmniejszać coraz bardziej odchylenie standardowe rozkładu normalnego, funkcja wreszcie doszłaby do swojego optimum w 20 wymiarach. Zajęłoby to jednak znacznie więcej czasu.
 
-Wynik dla funkcji kwadratowej uważamy za jak najbardziej satysfakcjonujący
+Wynik dla funkcji kwadratowej uważamy za jak najbardziej satysfakcjonujący.
 
 
 
@@ -151,6 +149,9 @@ Wykres przedstawiający ślad punktów z historii:
 
 ```
 
+Na tym przykładzie dobrze widać jak ważne w tego typu algorytmach są tzw. "strategie naprawcze". My stosujemy proste rzutowanie na granicę zbioru dopuszczalnego. Rozwiązanie to ma swoje wady i zalety. Jako wadę można przytoczyć słabe pokrycie bliskiej okolicy granic. 
+Inaczej sytuacja ma się w przypadku samych granic. Gdyby optimum było w takim miejscu, nie zostałoby ono ominięte przez algorytm, podczas gdy wiele innych algorytmów znacznie zawęża możliwość trafienia w punkt "w rogu"
+
 Wykres przedstawiający zmiany z najlepszych punktach:
 
 
@@ -183,6 +184,7 @@ Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum
 
 ```
 
+Dla 5 wymiarów, algorytm nie był w stanie znaleźć optimum globalnego. Przypuszczalnie przy zmianie parametrów tak, aby kroki algorytmu były krótsze, byłby on w stanie poradzić sobie lepiej, jednakże czas obliczeń wydłużyłby się znacznie.
 
 
 #####20 wymiarów
@@ -190,18 +192,7 @@ Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum
 
 ```
 
-#####20 wymiarów z modyfikacjami
-
-Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokami: kMax = 1500, density = 0.05
-Rezultat był następujący:
-
-
-```{r cec8_2_table20_higher_density}
-```
-
-
-
-
+Dla dwudziestu wymiarów algorytm sprawuje się podobnie jak dla 5 wymiarów. 
 
 
 ###Problem Schwefel's Function 
@@ -262,19 +253,14 @@ Dla 2 wymiarów algorytm niemalże bezbłędnie i bardzo szybko znajduje minimum
 
 ```
 
+Średni błąd wynosi dość dużo, jednakże wynika to z jednego nieudanego przejścia algorytmu. W pozostałych przypadkach radzi sobie on całkiem dobrze dla 5 wymiarów, osiągając relatywnie mały błąd względny.
 
 #####20 wymiarów
 ```{r cec14_2_table20}
 
 ```
 
-#####20 wymiarów z modyfikacjami
-
-Zmodyfikowaliśmy parametry tak, aby przeszukiwać przestrzeń mniejszymi krokami. Rezultat był następujący:
-Dobrane zostały: kMax = 1500, density = 0.05
-
-```{r cec14_2_table20_higher_density}
-```
+Na ww. przypadku funkcja nie poradziła sobie najlepiej - błędy są duże. Przypuszczamy, że ma to związek ze zbyt "rzadkim" sprawdzaniem punktów. 
 
 
 ###Wnioski z eksperymentów
@@ -283,6 +269,7 @@ Wyniki uzyskane okazały się całkiem satysfakcjonujące. Uważamy, że barier�
 Dla przypadkow dwuwymiarowych algorytm zachowuje się tak, jak tego oczekiwaliśmy - działa bardzo szybko, odnajduje globalne minima z łatwością, nie "utyka" w lokalnych.
 
 Uważamy, że warto byłoby poeksperymentować również z innymi rozkładami liczb losowych, ponieważ w naszych eksperymentach korzystaliśmy jedynie z rozkładu normalnego. 
+
 
 
 
